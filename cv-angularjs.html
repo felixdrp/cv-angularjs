@@ -134,8 +134,29 @@ var cv = {
         "Apache"
       ]
     },
+    {
+      "place": "Ocean's Eleven",
+      "period": "2004",
+      "position": "Actor",
+      "role": [
+        "Daniel \"Danny\" Ocean.",
+        "Danny and Rusty recruit eight former colleagues specialists."
+      ],
+      "technology": [
+        "PHP",
+        "Javascript",
+        "PostgreSQL",
+        "Apache"
+      ]
+    },
   ],
   "education": [
+    {
+      "title": "Majoring in Broadcast Journalism",
+      "especiality": "Broadcast",
+      "place": "Northern Kentucky University",
+      "period": "1979 to 1981"
+    },
     {
       "title": "Majoring in Broadcast Journalism",
       "especiality": "Broadcast",
@@ -175,48 +196,37 @@ var cv = {
     <col width="157"/>
     <col span="2" width="586"/>    
 </colgroup>
+<!-- Objetive -->
 <tr>
     <td style="text-align:left;width:3.598cm; " class="Table1_A1"><p class="P4">Objetive</p><p class="P4"> </p></td>
     <td style="text-align:left;width:13.414cm; " class="Table1_B1" colspan="2"><p class="P3" ng-repeat="objetive in cv.objetives">{{objetive}}</p></td>
 </tr>
-<tr>
-    <td style="text-align:left;width:3.598cm; " class="Table1_A2" rowspan="{{size(cv.skills)}}">
+
+<!-- Skills -->
+<tr  ng-repeat="parte in partes">
+    <td ng-if="$index === 0" style="text-align:left;width:3.598cm; " class="Table1_A2" rowspan="{{size(cv.skills)}}">
         <p class="P4">Skill <br/>Summary</p></td>
-    <td style="text-align:left;width:13.414cm; " class="Table1_B2"><p class="P3">{{partes[0] | uppercase}}</p></td>
-    <td style="text-align:left" class="Table1_B2"><p class="P3" ng-repeat="skill in cv.skills.languages">{{skill | capitalize}} </p></td>
+    <td style="text-align:left;width:13.414cm; " class="Table1_B2"><p class="P3">{{partes[$index] | uppercase}}</p></td>
+    <td style="text-align:left" class="Table1_B2"><p class="P3" ng-repeat="skill in cv.skills[parte]">{{skill | capitalize}}</p></td>
 </tr>
 
-<tr ng-if="size(cv.skills) > 1" ng-repeat="parte in partes | limitTo:-(size(cv.skills)-1)">
-    <td style="text-align:left;width:13.414cm; " class="Table1_B2"><p class="P3">{{partes[$index+1] | uppercase}} </p></td>
-    <td style="text-align:left" class="Table1_B2"><p class="P3" ng-repeat="skill in cv.skills[parte]">{{skill | capitalize}} </p></td>
-</tr>
 <!-- Experience -->
-<tr>
-  <td style="text-align:left;width:3.598cm; " class="Table1_A2" rowspan="{{size(cv.experience)}}"><p class="P4">Experience</p></td>
+<tr ng-repeat="experience in cv.experience">
+  <td ng-if="$index === 0" style="text-align:left;width:3.598cm; " class="Table1_A2" rowspan="{{size(cv.experience)}}">
+    <p class="P4">Experience</p></td>
   <td style="text-align:left;width:13.414cm; " class="Table1_B2" colspan="2">
-    <p class="Table_Experience_Place">{{cv.experience[0].place}}</p>
-    <p class="Table_Experience_Period">({{cv.experience[0].period}})</p>
-    <p class="Table_Experience_Position">{{cv.experience[0].position}}</p>
+    <p class="Table_Experience_Place">{{cv.experience[$index].place}}</p>
+    <p class="Table_Experience_Period">({{cv.experience[$index].period}})</p>
+    <p class="Table_Experience_Position">{{cv.experience[$index].position}}</p>
     <p class="P3">Role:</p>
     <ul class="Table_Experience_Role">
       <li ng-repeat="role in cv.experience[0].role">{{role}}</li>
     </ul>
     <p class="P3">Technology Used:</p>
-    <span style="margin-left:1em"></span><p class="Table_Experience_Technology" ng-repeat="technology in cv.experience[0].technology">{{print($index)}}{{technology}}</p></td>
+    <span style="margin-left:1em"></span>
+    <p class="Table_Experience_Technology" ng-repeat="technology in cv.experience[$index].technology">{{print($index)}}{{technology}}</p></td>
 </tr>
 
-<tr ng-if="size(cv.experience) > 1" ng-repeat="experience in cv.experience | limitTo:-(size(cv.experience)-1)">
-  <td style="text-align:left;width:13.414cm; " class="Table1_B2" colspan="2">
-    <p class="Table_Experience_Place">{{cv.experience[$index+1].place}}</p>
-    <p class="Table_Experience_Period">({{cv.experience[$index+1].period}})</p>
-    <p class="Table_Experience_Position">{{cv.experience[$index+1].position}}</p>
-    <p class="P3">Role:</p>
-    <ul class="Table_Experience_Role ">
-      <li ng-repeat="role in cv.experience[$index+1].role">{{role}}</li>
-    </ul>
-    <p class="P3">Technology Used:</p>
-    <p class="Table_Experience_Technology" ng-repeat="technology in cv.experience[$index+1].technology">{{print($index)}}{{technology}}</p></td>
-</tr>
 <!-- Education -->
 <tr>
 <td style="text-align:left;width:3.598cm; " class="Table1_A2"><p class="P4">Education</p></td>
@@ -231,6 +241,7 @@ var cv = {
     </ul>
 </td>
 </tr>
+
 <!-- Interests -->
 <tr>
 <td style="text-align:left;width:3.598cm; " class="Table1_A2"><p class="P4">Interests</p></td>
